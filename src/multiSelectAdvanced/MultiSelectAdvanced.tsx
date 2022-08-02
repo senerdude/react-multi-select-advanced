@@ -15,18 +15,18 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		selectedValues= [],
 		// Input
 		disabled,
-		inputDelay= 2000,
+		inputDelay= 1000,
 		placeholder,
 		// Filter
 		filterShowLoading= true,
-		filterLimit = 999,
+		filterLimit,
 		filterHighlightKeyword = false, // Suggested only use with low filter limit value for performance concerns
 		filterOrderByMatchRank = false, // Suggested only use with less then 1000 records
 		// Selected Items
 		selectionLimit,
 		selectionMaxVisibleItems,
 		selectionLabelMaxWidth= 100,
-		selectionShowClear,
+		selectionShowClear = false,
 		selectionShowDeleteButton = true,
 		// Language
 		languageOverwrite,
