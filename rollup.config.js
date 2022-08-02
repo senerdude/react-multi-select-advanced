@@ -1,5 +1,8 @@
-import sass from 'rollup-plugin-sass'
 import typescript from 'rollup-plugin-typescript2'
+import { terser } from 'rollup-plugin-terser'
+import scss from 'rollup-plugin-scss'
+import autoprefixer from 'autoprefixer'
+import postcss from 'postcss'
 
 import pkg from './package.json'
 
@@ -14,6 +17,6 @@ export default {
       strict: false
     }
   ],
-  plugins: [sass({ insert: true }), typescript()],
+  plugins: [scss({ processor: () => postcss([autoprefixer()]), outputStyle: "compressed" }), typescript(), terser()],
   external: ['react', 'react-dom']
 }
