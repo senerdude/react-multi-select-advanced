@@ -1,0 +1,367 @@
+// Variables
+$spinnerSize: 16px;
+$spinnerThickness: 1px;
+$desktop-breakpoint: 1024px;
+
+// Min Desktop
+@mixin minDesktop {
+	@media only screen and (min-width: #{$desktop-breakpoint + 1}) {
+		@content;
+	}
+}
+
+// Custom scroll bar
+@mixin scrollBarStyle {
+	@include minDesktop {
+		&::-webkit-scrollbar {
+			width: .5em;
+			height: .5em;
+			background: #F2F2F2;
+			border-radius: 3px;
+		}
+
+		&::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 6px #DEDEDE;
+		}
+
+		&::-webkit-scrollbar-thumb {
+			background-color: #C1C1C1;
+			border: 1px #C1C1C1 solid;
+			border-radius: 3px;
+			border-top-width: 2px;
+			border-bottom-width: 2px;
+			
+			&:hover {
+				background-color: #9B9B9B;
+				border-color: #9B9B9B;
+			}
+		}
+	}
+}
+
+@mixin loadingSpinner {
+	border-radius: 50%;
+	width: $spinnerSize;
+	height: $spinnerSize;
+	margin: 0 auto;
+	font-size: 10px;
+	position: relative;
+	text-indent: -9999em;
+	border-top: $spinnerThickness solid rgba(255, 255, 255, 0.2);
+	border-right: $spinnerThickness solid rgba(255, 255, 255, 0.2);
+	border-bottom: $spinnerThickness solid rgba(255, 255, 255, 0.2);
+	border-left: $spinnerThickness solid #000000;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-animation: loadingSpin 1.1s infinite linear;
+	animation: loadingSpin 1.1s infinite linear;
+	overflow: hidden;
+
+	&::after {
+		border-radius: 50%;
+		width: $spinnerSize;
+		height: $spinnerSize;
+	}
+}
+
+@mixin clearAllButton {
+	padding: 4px;
+	background-color: #f1f1f1;
+	border-radius: 4px;
+	white-space: nowrap;
+	margin: 0 4px 4px 0;
+	background-color: #ff8b8b;
+	color: #fff;
+	cursor: pointer;
+
+	&:hover,
+	&:focus,
+	&:focus-visible {
+		outline: none;
+		background-color: #f84848;
+	}
+}
+
+@mixin deleteButton {
+	position: relative;
+	display: block;
+	width: 16px;
+	height: 16px;
+	font-size: 12px;
+	text-align: center;
+	color: #fff;
+	cursor: pointer;
+	background-color: #6495ed;
+	border-radius: 4px;
+
+	&:hover {
+		background-color: #4c83e9;
+	}
+
+	&:before,
+	&:after {
+		position: absolute;
+		left: 7px;
+		top: 2px;
+		content: ' ';
+		height: 12px;
+		width: 2px;
+		background-color: #fff;
+		border-radius: 1px;
+	}
+
+	&:before {
+		transform: rotate(45deg);
+	}
+
+	&:after {
+		transform: rotate(-45deg);
+	}
+}
+
+.MultiSelectAdvanced {
+	width: 100%; // Should relative to parent to keep width responsive
+	min-width: 150px; // Minimum space required by component
+	height: min-content; // Prevents auto height expand
+
+	// Default font
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+
+	// Make sure everything border-box for correct calculations
+	* { box-sizing: border-box; }
+
+	// Selections container
+	&_Selection { display: block; }
+
+	// Loading Container
+	&_Loading {
+		display: none;
+	}
+
+	&_LoadingSpinner {
+		@include loadingSpinner;
+	}
+
+	// Search input container
+	&_FilterInput {
+		position: relative; // Require to set child elements offset
+		display: grid;
+		align-items: center;
+		height: 100%;
+		min-width: 50px;
+		min-height: 24px;
+		grid-template-columns: 1fr;
+		gap: 8px;
+		border: 1px #d4d4d4 solid;
+		background: #fff;
+		padding: 4px;
+		border-radius: 4px;
+
+		input {
+			border: 0;
+			height: 100%;
+			width: 100%;
+			font-size: 14px;
+
+			&:focus {
+				border: 0;
+				outline: 0;
+			}
+		}
+	}
+
+	// Selected items list container (UL)
+	&_SelectionList {
+		display: block;
+		list-style-type: none;
+		margin: 8px 0 0 0;
+		padding: 0;
+		width: 100%;
+
+		// List items
+		&_Item {
+			display: grid;
+			grid-template-columns: min-content min-content;
+			align-items: center;
+			align-content: center;
+			column-gap: 8px;
+			padding: 4px;
+			background-color: #f1f1f1;
+			border-radius: 4px;
+			white-space: nowrap;
+			float: left;
+			margin: 0 4px 4px 0;
+
+			// Set max width to save space
+			& > span {
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			&:hover,
+			&:focus,
+			&:focus-visible {
+				outline: none;
+				background-color: #e0e0e0;
+			}
+		}
+
+		&_More {
+			display: grid;
+			align-items: center;
+			align-content: center;
+			float: left;
+		}
+
+		&_ClearAllButtonContainer {
+			display: grid;
+			align-items: center;
+			align-content: center;
+			float: left;
+			cursor: pointer;
+
+			&:hover,
+			&:focus,
+			&:focus-visible {
+				outline: none;
+			}
+		}
+
+		&_DeleteButtonContainer {
+			display: grid;
+			cursor: pointer;
+		}
+
+		&::after {
+			display: block;
+			content: "";
+			clear: both;
+		}
+	}
+
+	&_DeleteButton {
+		@include deleteButton;
+	}
+
+	&_ClearAllButton {
+		@include clearAllButton;
+	}
+
+	&_MoreItem {
+		padding: 4px;
+		background-color: #fdfdfd;
+		border-radius: 4px;
+		white-space: nowrap;
+		float: left;
+		margin: 0 4px 4px 0;
+	}
+
+	&_FilterList {
+		display: none;
+		width: max-content;
+		position: absolute;
+		z-index: 2;
+		background: #fff;
+
+		// Suggestion list
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			max-height: 300px;
+			overflow-x: auto;
+			border: 1px #d4d4d4 solid;
+			border-radius: 4px;
+
+			@include scrollBarStyle;
+
+			li {
+				padding: 4px;
+				cursor: pointer;
+
+				&:hover,
+				&:focus,
+				&:focus-visible {
+					background-color: #d4d4d4;
+					border: 0;
+					outline: none;
+				}
+			}
+		}
+	}
+
+	&--loading {
+		.MultiSelectAdvanced_FilterInput {
+			grid-template-columns: 1fr min-content;
+			column-gap: 8px;
+		}
+		.MultiSelectAdvanced_Loading {
+			display: block;
+		}
+	}
+
+	&--disabled {
+		.MultiSelectAdvanced_FilterInput {
+			background-color: #e4e4e4;
+		}
+	}
+
+	// Text Wrap
+	&--noWrap .MultiSelectAdvanced_SelectionList_Item { 
+		white-space: nowrap;
+	}
+
+	// Open
+	&--open {
+		.MultiSelectAdvanced_FilterList { display: grid; }
+	}
+
+	// Alignment
+	&--top {
+		.MultiSelectAdvanced_FilterList { top: 0; }
+	}
+
+	&--bottom {
+		.MultiSelectAdvanced_FilterList { bottom: 0; }
+	}
+
+	&--left {
+		.MultiSelectAdvanced_FilterList { 
+			left: 0;
+			text-align: left;
+		}
+	}
+
+	&--right {
+		.MultiSelectAdvanced_FilterList { 
+			right: 0;
+			text-align: right;
+		}
+	}
+}
+
+@-webkit-keyframes loadingSpin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes loadingSpin {
+	0% {
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}

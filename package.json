@@ -1,0 +1,58 @@
+{	
+  "version": "0.1.0",
+	"name": "react-multi-select-advanced",
+	"description": "Multi select filter component with advanced features",
+	"author": "Sener <sener@lifetoweb.com> (http://lifetoweb.com)",
+	"main": "dist/index.js",
+	"keywords": [
+		"npm",
+		"react",
+		"dropdown",
+		"multiselect",
+		"multilist",
+		"list",
+		"select",
+		"component",
+		"autocomplete",
+		"react-multi-select-advanced",
+		"react-multiselect-advanced",
+		"multiselect react dropdown",
+		"react multiselect dropdown"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/senerdude/react-multi-select-advanced.git"
+	},
+	"bugs": {
+        "url": "https://github.com/senerdude/react-multi-select-advanced/issues"
+    },
+	"homepage": "https://lifetoweb.com/react-multi-select-advanced",
+	"license": "MIT",
+  "engines": {
+    "node": ">=8",
+    "npm": ">=5"
+  },
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c -w"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.7.0 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.7.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.3",
+    "@types/react": "^18.0.15",
+    "@types/react-dom": "^18.0.6",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^2.77.2",
+    "rollup-plugin-sass": "^1.2.13",
+    "rollup-plugin-typescript2": "^0.32.1",
+    "typescript": "^4.7.4"
+  },
+  "files": ["dist"]
+}
