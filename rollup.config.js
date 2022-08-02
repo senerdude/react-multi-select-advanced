@@ -1,22 +1,24 @@
 import typescript from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
-import scss from 'rollup-plugin-scss'
-import autoprefixer from 'autoprefixer'
-import postcss from 'postcss'
+import sass from 'rollup-plugin-sass'
 
 import pkg from './package.json'
 
 export default {
   input: 'src/index.tsx',
+  plugins: [
+    sass({ insert: true }),
+    typescript(),
+    terser()
+  ],
   output: [
     {
       file: pkg.main,
-      format: 'cjs',
+      format: 'esm',
       exports: 'named',
-      sourcemap: true,
-      strict: false
+      sourcemap: false,
+      strict: true
     }
   ],
-  plugins: [scss({ processor: () => postcss([autoprefixer()]), outputStyle: "compressed" }), typescript(), terser()],
   external: ['react', 'react-dom']
 }
