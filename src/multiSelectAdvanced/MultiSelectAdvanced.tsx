@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
@@ -285,18 +286,18 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		}
 
 		// If there is no options provided
-		if (options.length <= 0) return
+		if (!options?.length) return
 
 		// Show loading state
 		setFilterLoading(true)
 
 		// Debounce
-		// eslint-disable-next-line no-return-assign
-		return handleFilterTimeout = setTimeout(() => {
+		handleFilterTimeout = setTimeout(() => {
 
 			// Filter results by provided keywords
 			const tmpList = []
 			for (let i = 0; i < options.length; i++) {
+
 				// Item
 				const option = options[i] as MultiSelectAdvancedOption
 
@@ -349,6 +350,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 				// Finally, set data if limit reached or all records checked
 				if (options.length - 1 === i) {
+
+					console.log('for loop finished')
 
 					// Sort result by rank if enabled
 					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
