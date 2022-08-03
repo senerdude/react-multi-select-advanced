@@ -30,13 +30,7 @@ const selectedCities = [
 export default {
 	title: 'Example/react-multi-select-advanced',
 	component: MultiSelectAdvanced,
-	argTypes: {
-		options: {
-			table: {
-				disable: true,
-			}
-		}
-	}
+	argTypes: {}
 } as ComponentMeta<typeof MultiSelectAdvanced>
 
 const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <MultiSelectAdvanced {...args} />
