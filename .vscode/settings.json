@@ -1,0 +1,28 @@
+{
+    "files.eol": "\n", // Use LF line endings
+	"editor.insertSpaces": false, // Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is true.
+	"editor.tabSize": 4, // The number of spaces a tab is equal to. This setting is overridden based on the file contents when `editor.detectIndentation` is true.
+	"editor.detectIndentation": false, // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents. Set to false to keep the values you've explicitly set, above.
+	"cSpell.language": "en-GB", // Check spelling
+	"editor.defaultFormatter": "esbenp.prettier-vscode", // Prettier is the default formatter
+	"javascript.preferences.quoteStyle": "single", // Prefer single quotes
+	"autoimport.useSemiColon": false,
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+    "cSpell.words": [
+		"browserslist",
+		"multilist",
+		"sass",
+		"Sener",
+		"senerdude",
+		"lifetoweb"
+	],
+	"[scss]": {
+		"editor.defaultFormatter": "vscode.css-language-features"
+	},
+	"git.ignoreLimitWarning": true,
+	"[jsonc]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	}
+}

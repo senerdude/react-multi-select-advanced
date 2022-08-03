@@ -1,7 +1,7 @@
 {
-  "version": "0.2.4",
+  "version": "0.2.5",
   "name": "react-multi-select-advanced",
-  "description": "Multi select filter component with advanced features",
+  "description": "React multi select filter input with advanced features",
   "author": "Sener <sener@lifetoweb.com> (http://lifetoweb.com)",
   "main": "dist/index.js",
   "keywords": [
@@ -33,8 +33,9 @@
     "npm": ">=5"
   },
   "scripts": {
-    "build": "rollup -c",
-    "start": "rollup -c -w"
+    "start": "react-scripts start",
+    "rollup": "rollup -c",
+    "rollup:watch": "rollup -c -w"
   },
   "peerDependencies": {
     "react": "^16.7.0 || ^17.0.0 || ^18.0.0",
@@ -44,10 +45,21 @@
     "@types/node": "^18.6.3",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.4",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-react": "^7.30.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
     "rollup": "^2.77.2",
     "rollup-plugin-sass": "^1.2.13",
     "rollup-plugin-terser": "^7.0.2",
@@ -57,5 +69,17 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }

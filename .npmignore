@@ -1,7 +1,11 @@
 dist
+public
 .babelrc
 .storybook
 .gitignore
-.prettierrc
+.prettierrc.js
+.eslintrc.js
+.eslintignore
+.vscode
 rollup.config.js
 tsconfig.json

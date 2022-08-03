@@ -75,10 +75,10 @@ export default App
 | Language
 | `languageOverwrite` | `object` | | Please see 4. Localization
 | Custom components 
-| `LoadingComponent` | `JSX Element` | | Custom loading indicator
-| `ClearButtonComponent` | `JSX Element` | | Custom clear all button
-| `DeleteButtonComponent` | `JSX Element` | | Custom delete button
-| `MoreItemsComponent` | `JSX Element` | | Custom more items
+| `LoadingComponent` | `JSX.Element` | | Custom loading indicator
+| `ClearButtonComponent` | `JSX.Element` | | Custom clear all button
+| `DeleteButtonComponent` | `JSX.Element` | | Custom delete button
+| `MoreItemsComponent` | `JSX.Element` | | Custom more items
 | Callback
 | `onChange` | `function` |  | Callback function will invoked on selected options are changed.
 ----
