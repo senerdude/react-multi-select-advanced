@@ -30,11 +30,26 @@ const selectedCities = [
 export default {
 	title: 'Example/react-multi-select-advanced',
 	component: MultiSelectAdvanced,
+	parameters: {
+		docs: {
+		  description: {
+			  component: `
+	Warning : options parameter is disabled 
+	because Storybok can't handle 42.803 cities... 
+	And please don't press "Show code" under component 
+	Your browser might freeze 🥶
+			  `
+		  }
+		}
+	},
 	argTypes: {
 		options: {
 			table: {
 				disable: true
 			}
+		},
+		options_disabled: {
+
 		}
 	}
 } as ComponentMeta<typeof MultiSelectAdvanced>
