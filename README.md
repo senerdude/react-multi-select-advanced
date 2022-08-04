@@ -1,5 +1,7 @@
 # react-multi-select-advanced
 
+[https://img.shields.io/github/license/senerdude/react-multi-select-advanced]
+
 ## Description   
 
 The React Multi-select Advanced component is a powerful tool that can handle massive data sets without any struggle.
@@ -47,45 +49,45 @@ import MultiSelectAdvanced, { MultiSelectAdvancedOption } from 'react-multi-sele
 
 // Mock data
 const options = [
-	{ label: 'Istanbul', value: 'Istanbul' },
-	{ label: 'Paris', value: 'Paris' },
-	{ label: 'London', value: 'London' },
-	{ label: 'Buenos Aires', value: 'Buenos Aires' },
-	{ label: 'Canberra', value: 'Canberra' },
-	{ label: 'Havana', value: 'Havana' },
-	{ label: 'Helsinki', value: 'Helsinki', disabled: true },
-	{ label: 'Tokyo', value: 'Tokyo' },
-	{ label: 'Amsterdam', value: 'Amsterdam' },
-	{ label: 'Moscow', value: 'Moscow' },
-	{ label: 'Stockholm', value: 'Stockholm', disabled: true },
-	{ label: 'Singapore', value: 'Singapore' },
-	{ label: 'Lisbon', value: 'Lisbon' },
-	{ label: 'Oslo', value: 'Oslo' },
-	{ label: 'Reykjavík', value: 'Reykjavík' }
+ { label: 'Istanbul', value: 'Istanbul' },
+ { label: 'Paris', value: 'Paris' },
+ { label: 'London', value: 'London' },
+ { label: 'Buenos Aires', value: 'Buenos Aires' },
+ { label: 'Canberra', value: 'Canberra' },
+ { label: 'Havana', value: 'Havana' },
+ { label: 'Helsinki', value: 'Helsinki', disabled: true },
+ { label: 'Tokyo', value: 'Tokyo' },
+ { label: 'Amsterdam', value: 'Amsterdam' },
+ { label: 'Moscow', value: 'Moscow' },
+ { label: 'Stockholm', value: 'Stockholm', disabled: true },
+ { label: 'Singapore', value: 'Singapore' },
+ { label: 'Lisbon', value: 'Lisbon' },
+ { label: 'Oslo', value: 'Oslo' },
+ { label: 'Reykjavík', value: 'Reykjavík' }
 ]
 
 // Mock pre selected data
 const selectedValues = [
-	{ label: 'London', value: 'London' },
-	{ label: 'Tokyo', value: 'Tokyo' }
+ { label: 'London', value: 'London' },
+ { label: 'Tokyo', value: 'Tokyo' }
 ]
 
 // App
 function App() {
 
-	// Pre-select or not
-	const [selectedItems, setSelectedItems] = useState(selectedValues as MultiSelectAdvancedOption[])
+ // Pre-select or not
+ const [selectedItems, setSelectedItems] = useState(selectedValues as MultiSelectAdvancedOption[])
 
-	// Onchange handler
-	const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => setSelectedItems(selectedItems)
+ // Onchange handler
+ const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => setSelectedItems(selectedItems)
 
-	return (
-		<div className="App">
+ return (
+  <div className="App">
 
-			<MultiSelectAdvanced options={options} selectedValues={selectedItems} onChange={handleChange} />
-		
-		</div>
-  	)
+   <MultiSelectAdvanced options={options} selectedValues={selectedItems} onChange={handleChange} />
+
+  </div>
+ )
 }
 
 export default App

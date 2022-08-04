@@ -54,7 +54,7 @@ export default {
 	}
 } as ComponentMeta<typeof MultiSelectAdvanced>
 
-const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <MultiSelectAdvanced {...args} />
+const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <div style={{ fontFamily:'Verdana' }}><MultiSelectAdvanced {...args} /></div>
 
 export const Default = Template.bind({})
 Default.args = {
