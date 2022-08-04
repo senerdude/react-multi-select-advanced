@@ -34,10 +34,10 @@ export default {
 		docs: {
 		  description: {
 			  component: `
-	Warning : options parameter is disabled 
-	because Storybok can't handle 42.803 cities... 
-	And please don't press "Show code" under component 
-	Your browser might freeze 🥶
+	Warning: In this demo I used nearly 43,000 cities around the world as options.
+	To prevent Storybook from overload and crash, I had to disable the 
+	options parameter on Storybook. Also, clicking "Show code" under the component, 
+	could cause to freeze your browser too. 🥶
 			  `
 		  }
 		}

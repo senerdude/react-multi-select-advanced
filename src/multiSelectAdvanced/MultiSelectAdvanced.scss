@@ -50,7 +50,7 @@ $desktop-breakpoint: 1024px;
 	border-top: $spinnerThickness solid rgba(255, 255, 255, 0.2);
 	border-right: $spinnerThickness solid rgba(255, 255, 255, 0.2);
 	border-bottom: $spinnerThickness solid rgba(255, 255, 255, 0.2);
-	border-left: $spinnerThickness solid #000000;
+	border-left: $spinnerThickness solid #000;
 	-webkit-transform: translateZ(0);
 	-ms-transform: translateZ(0);
 	transform: translateZ(0);
@@ -124,16 +124,17 @@ $desktop-breakpoint: 1024px;
 	width: 100%; // Should relative to parent to keep width responsive
 	min-width: 150px; // Minimum space required by component
 	height: min-content; // Prevents auto height expand
-
-	// Default font
-	font-family: Arial, Helvetica, sans-serif;
+	font-family: inherit;
 	font-size: 14px;
 
 	// Make sure everything border-box for correct calculations
 	* { box-sizing: border-box; }
 
 	// Selections container
-	&_Selection { display: block; }
+	&_Selection { 
+		display: grid;
+		gap: 8px;
+	}
 
 	// Loading Container
 	&_Loading {
@@ -158,6 +159,14 @@ $desktop-breakpoint: 1024px;
 		background: #fff;
 		padding: 4px;
 		border-radius: 4px;
+
+		&:focus-within {
+			border: 1px solid #a7a7a7;
+		}
+
+		&--invalid {
+			border: 1px solid #ff0000;
+		}
 
 		input {
 			border: 0;
@@ -277,7 +286,7 @@ $desktop-breakpoint: 1024px;
 
 			@include scrollBarStyle;
 
-			li {
+			.MultiSelectAdvanced_FilterList_Item {
 				padding: 4px;
 				cursor: pointer;
 
@@ -287,6 +296,11 @@ $desktop-breakpoint: 1024px;
 					background-color: #d4d4d4;
 					border: 0;
 					outline: none;
+				}
+
+				&--disabled {
+					background-color: #f1f1f1;
+					cursor: unset;
 				}
 			}
 		}
@@ -329,7 +343,7 @@ $desktop-breakpoint: 1024px;
 
 	&--left {
 		.MultiSelectAdvanced_FilterList { 
-			left: 0;
+			left: -1px;
 			text-align: left;
 		}
 	}

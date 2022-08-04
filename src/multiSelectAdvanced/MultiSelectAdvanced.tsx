@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
@@ -6,7 +5,8 @@ import './MultiSelectAdvanced.scss'
 export interface MultiSelectAdvancedOption {
 	label: string
 	value: string | number
-	matchRank?: number | undefined
+	disabled?: boolean | string
+	matchRank?: number
 }
 
 // Component Interface
@@ -16,7 +16,11 @@ export interface MultiSelectAdvancedProps {
 	options?: MultiSelectAdvancedOption[]
 	selectedValues?: MultiSelectAdvancedOption[]
 	// Input
+	label?: string,
+	name?: string,
+	id?: string,
 	disabled?: boolean
+	invalid?: boolean
 	inputDelay?: number
 	placeholder?: string
 	// Filter
@@ -44,6 +48,11 @@ export interface MultiSelectAdvancedProps {
 let handleFilterTimeout: NodeJS.Timeout
 const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
+	// Generates unique id in case name or id not provided.
+	const uniqueId = () => {
+		return 'id' + parseInt(Math.ceil(Math.random() * Date.now()).toPrecision(5).toString().replace('.', ''))
+	}
+
 	// Destruct Props and set default values
 	const {
 		// Component
@@ -51,7 +60,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		options= [], 
 		selectedValues= [],
 		// Input
+		label,
+		name= uniqueId(),
+		id= name || uniqueId(),
 		disabled,
+		invalid,
 		inputDelay= 1000,
 		placeholder,
 		// Filter
@@ -158,6 +171,9 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 	// Add option as selected
 	const addSelection = ( item : MultiSelectAdvancedOption ) => {
+
+		// Don't add if item disabled
+		if ((item?.disabled === 'false') !== Boolean(item?.disabled)) return false
 
 		// Clear filtered items
 		setFilteredList([])
@@ -351,8 +367,6 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 				// Finally, set data if limit reached or all records checked
 				if (options.length - 1 === i) {
 
-					console.log('for loop finished')
-
 					// Sort result by rank if enabled
 					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 					if (filterOrderByMatchRank) tmpList.sort((a,b) => a.matchRank! - b.matchRank!)
@@ -439,6 +453,7 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 			}
 
 			return 	<ul className="MultiSelectAdvanced_SelectionList">
+
 				{ selectedItemsList }
 
 				<MoreItems />
@@ -461,9 +476,10 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 						
 						{
 							filteredList.map((filteredItem, i) => 
-								<li tabIndex={0} onKeyDown={handleNavigate} onClick={() => addSelection(filteredItem)} key={i.toString() + filteredItem.value}>
+								<li className={`MultiSelectAdvanced_FilterList_Item${(filteredItem?.disabled === 'false') !== Boolean(filteredItem?.disabled) ? ' MultiSelectAdvanced_FilterList_Item--disabled':''}`} tabIndex={0} onKeyDown={handleNavigate} onClick={() => addSelection(filteredItem)} key={i.toString() + filteredItem.value}>
 									{ filterHighlightKeyword ? highlightText(filteredItem.label) : filteredItem.label }
-								</li>)
+								</li>
+							)
 						}
 
 					</ul>
@@ -479,9 +495,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 		<div className="MultiSelectAdvanced_Selection" ref={selectionRef}>
 
-			<div className="MultiSelectAdvanced_FilterInput" ref={inputContainerRef}>
+			{ label && <label className="MultiSelectAdvanced_Label" htmlFor={name}>{label}</label> }
 
-				<input type="text" onChange={handleFilter} onKeyDown={handleInputKeyDown} value={filterKeyword} placeholder={placeholderText} ref={inputRef} disabled={isInputDisabled || disabled} />
+			<div className={`MultiSelectAdvanced_FilterInput${invalid?' MultiSelectAdvanced_FilterInput--invalid':''}`} ref={inputContainerRef}>
+
+				<input name={name} id={id} type="text" onChange={handleFilter} onKeyDown={handleInputKeyDown} value={filterKeyword} placeholder={placeholderText} ref={inputRef} disabled={isInputDisabled || disabled} />
 
 				<LoadingIndicator />
 

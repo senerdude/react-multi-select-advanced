@@ -40,13 +40,9 @@ function App() {
 		<div className="App">
 			<div className="MultiSelectContainer">
 
-				<header>React Multi Select Advanced</header>
+				<h1>React Multi Select Advanced</h1>
 
-				<label>
-					Select cities from 42802 cities all around the world
-				</label>
-
-				<MultiSelectAdvanced options={options.cities} selectedValues={selectedItems} onChange={handleChange} />
+				<MultiSelectAdvanced label="Select cities from 42802 cities all around the world" options={options.cities} selectedValues={selectedItems} onChange={handleChange} />
 
 			</div>
 		</div>
