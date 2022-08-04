@@ -34,7 +34,7 @@ export default {
 		docs: {
 		  description: {
 			  component: `
-	Warning: In this demo I used nearly 43,000 cities around the world as options.
+	Warning: In this demo I used nearly 43,000 city names around the world as options.
 	To prevent Storybook from overload and crash, I had to disable the 
 	options parameter on Storybook. Also, clicking "Show code" under the component, 
 	could cause to freeze your browser too. 🥶
@@ -47,17 +47,14 @@ export default {
 			table: {
 				disable: true
 			}
-		},
-		options_disabled: {
-
 		}
 	}
 } as ComponentMeta<typeof MultiSelectAdvanced>
 
 const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <div style={{ fontFamily:'Verdana' }}><MultiSelectAdvanced {...args} /></div>
 
-export const Default = Template.bind({})
-Default.args = {
+export const BasicUsage = Template.bind({})
+BasicUsage.args = {
 	options: options.cities,
 	selectedValues : selectedCities
 }

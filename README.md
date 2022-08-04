@@ -134,14 +134,14 @@ export default App
 
 ## 4. Localization
 
-Easy to localize component by passing prop `languageOverwrite`. Default values are as below.
+Easy to localize component by passing object to prop `languageOverwrite`. Default values are as below.
 
 ```json
 {
-	"selectionLimitReached" : "Max selection limit reached.", 
-	"selectionShowClearText": "Clear All", 
-	"selectionDeleteTitle": "Remove selection", 
-	"moreItemsText": "{{count}} more items..." 
+ "selectionLimitReached" : "Max selection limit reached.", 
+ "selectionShowClearText": "Clear All", 
+ "selectionDeleteTitle": "Remove selection", 
+ "moreItemsText": "{{count}} more items..." 
 }
 ```
 
