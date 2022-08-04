@@ -1,9 +1,5 @@
 # react-multi-select-advanced
 
-
-![MIT](https://img.shields.io/github/license/senerdude/react-multi-select-advanced)
-[![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://react-multi-select-component.pages.dev/)
-
 ## Description   
 
 The React Multi-select Advanced component is a powerful tool that can handle massive data sets without any struggle.
