@@ -146,6 +146,7 @@ export default App
 
 
 </table>
+
 ----
 
 ## 4. Localization
