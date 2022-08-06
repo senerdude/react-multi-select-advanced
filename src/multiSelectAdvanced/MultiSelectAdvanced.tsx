@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
