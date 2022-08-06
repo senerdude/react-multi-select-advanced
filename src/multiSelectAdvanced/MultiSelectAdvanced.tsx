@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
@@ -107,19 +108,19 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	const inputRef = useRef() as MutableRefObject<HTMLInputElement>
 
 	// Classes
-	const classNames = 'MultiSelectAdvanced' +
-	`${' MultiSelectAdvanced--' + verticalDirection}` +
-	`${' MultiSelectAdvanced--' + horizontalDirection}` +
-	`${filterLoading ? ' MultiSelectAdvanced--loading' : ''}` +
-	`${disabled ? ' MultiSelectAdvanced--disabled' : ''}` +
-	`${filteredList.length > 0 ? ' MultiSelectAdvanced--open' : ''}` +
+	const classNames = 'Msa' +
+	`${' Msa--' + verticalDirection}` +
+	`${' Msa--' + horizontalDirection}` +
+	`${filterLoading? ' Msa--loading' : ''}` +
+	`${disabled? ' Msa--disabled' : ''}` +
+	`${filteredList.length > 0 ? ' Msa--open' : ''}` +
 	`${className !== undefined ? ' ' + className : ''}`
 
 	// Default Translation
 	let languageDefaults = {
 		selectionLimitReached : 'Max selection limit reached.',
-		selectionShowClearText: 'Clear All',
-		selectionDeleteTitle: 'Remove selection',
+		selectionShowClearTitle: 'Clear All',
+		selectionDeleteTitle: 'Remove',
 		moreItemsText: '{{count}} more items...'
 	}
 
@@ -141,7 +142,7 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 			const { innerWidth, innerHeight } = window
 
 			// Vertical Direction
-			const tmpVerticalDirection = innerHeight <= menuHeight ? 'bottom' : (innerHeight - menuHeight) >= (wrapperTop + wrapperHeight) ? 'bottom' : 'top'
+			const tmpVerticalDirection = wrapperTop <= menuHeight ? 'bottom' : ((innerHeight - menuHeight) >= (wrapperTop + wrapperHeight) ? 'bottom' : 'top')
 			setVerticalDirection(tmpVerticalDirection)
 
 			// Horizontal Direction
@@ -149,7 +150,7 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 			setHorizontalDirection(tmpHorizontalDirection)
 
 			// Set Menu Position
-			suggestionsRef.current.setAttribute('style', `${tmpVerticalDirection}: -${menuHeight + 1}px`)
+			suggestionsRef.current.setAttribute('style', `${tmpVerticalDirection}: -${menuHeight + 2}px`)
 		}
 	})
 
@@ -391,8 +392,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	const LoadingIndicator = () =>  {
 		// If filter loading
 		if (filterShowLoading) {
-			return <div className="MultiSelectAdvanced_Loading">
-				{ LoadingComponent ? <LoadingComponent /> : <div className="MultiSelectAdvanced_LoadingSpinner" /> }
+			return <div className="Msa_Loading">
+				{ LoadingComponent ? <LoadingComponent /> : <div className="Msa_LoadingSpinner" /> }
 			</div>
 		}
 
@@ -402,8 +403,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	// Delete Button
 	const DeleteButton = (props: { item: MultiSelectAdvancedOption }) => {
 		if (selectionShowDeleteButton) {
-			return <span className="MultiSelectAdvanced_SelectionList_DeleteButtonContainer" onClick={() => removeSelection(props.item)} title={languageDefaults.selectionDeleteTitle}>
-				{ DeleteButtonComponent ? <DeleteButtonComponent /> : <span className="MultiSelectAdvanced_DeleteButton"></span> }
+			return <span role="button" className="Msa_SelectionList_DeleteButtonContainer" onClick={() => removeSelection(props.item)} title={languageDefaults.selectionDeleteTitle}>
+				{ DeleteButtonComponent ? <DeleteButtonComponent /> : <span className="Msa_DeleteButton"></span> }
 			</span>
 		}
 
@@ -414,8 +415,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	const MoreItems = () => {
 
 		if (selectionMaxVisibleItems && selectedItems.length > selectionMaxVisibleItems) {
-			return <li className="MultiSelectAdvanced_SelectionList_More">
-				{ MoreItemsComponent ?  <MoreItemsComponent>{ (selectedItems.length - selectionMaxVisibleItems).toString() }</MoreItemsComponent> : <span className="MultiSelectAdvanced_MoreItem">{languageDefaults.moreItemsText.replace('{{count}}', (selectedItems.length - selectionMaxVisibleItems).toString() )}</span> }
+			return <li className="Msa_SelectionList_More">
+				{ MoreItemsComponent ?  <MoreItemsComponent>{ (selectedItems.length - selectionMaxVisibleItems).toString() }</MoreItemsComponent> : <span className="Msa_MoreItem">{languageDefaults.moreItemsText.replace('{{count}}', (selectedItems.length - selectionMaxVisibleItems).toString() )}</span> }
 			</li>
 		}
 
@@ -426,8 +427,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	const ClearButton = () => {
 		// IF button enabled and min 2 items selected
 		if (selectionShowClear && selectedItems.length > 1) {
-			return <li className="MultiSelectAdvanced_SelectionList_ClearAllButtonContainer" tabIndex={0} onKeyDown={e => clearSelectionKey(e)} onClick={clearSelection}>
-				{ ClearButtonComponent ? <ClearButtonComponent /> : <span className="MultiSelectAdvanced_ClearAllButton">{languageDefaults.selectionShowClearText}</span> }
+			return <li role="button" className="Msa_SelectionList_ClearAllButtonContainer" tabIndex={0} onKeyDown={e => clearSelectionKey(e)} onClick={clearSelection} title={languageDefaults.selectionShowClearTitle}>
+				{ 
+					ClearButtonComponent ? 
+						<ClearButtonComponent /> : 
+						<svg className="Msa_ClearAllButton" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M576 384C576 419.3 547.3 448 512 448H205.3C188.3 448 172 441.3 160 429.3L9.372 278.6C3.371 272.6 0 264.5 0 256C0 247.5 3.372 239.4 9.372 233.4L160 82.75C172 70.74 188.3 64 205.3 64H512C547.3 64 576 92.65 576 128V384zM271 208.1L318.1 256L271 303C261.7 312.4 261.7 327.6 271 336.1C280.4 346.3 295.6 346.3 304.1 336.1L352 289.9L399 336.1C408.4 346.3 423.6 346.3 432.1 336.1C442.3 327.6 442.3 312.4 432.1 303L385.9 256L432.1 208.1C442.3 199.6 442.3 184.4 432.1 175C423.6 165.7 408.4 165.7 399 175L352 222.1L304.1 175C295.6 165.7 280.4 165.7 271 175C261.7 184.4 261.7 199.6 271 208.1V208.1z"/></svg> } {/* Font Awesome Pro 6.1.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. */}
 			</li>
 		}
 
@@ -446,13 +450,13 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 				if (selectionMaxVisibleItems && selectionMaxVisibleItems <= i) break
 				
-				selectedItemsList.push(<li className="MultiSelectAdvanced_SelectionList_Item" key={selectedItem.value} tabIndex={0} onKeyDown={e => removeSelectionKey(e, selectedItem)}>
+				selectedItemsList.push(<li className={`Msa_SelectionList_Item${selectionShowDeleteButton?' Msa_SelectionList_Item--showDelete':''}`} key={selectedItem.value} tabIndex={0} onKeyDown={e => removeSelectionKey(e, selectedItem)}>
 					<span style={{ maxWidth: selectionLabelMaxWidth }}>{selectedItem.label}</span> <DeleteButton item={selectedItem} />
 				</li>)
 
 			}
 
-			return 	<ul className="MultiSelectAdvanced_SelectionList">
+			return 	<ul className="Msa_SelectionList">
 
 				{ selectedItemsList }
 
@@ -469,14 +473,14 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	// Filtered List
 	const FilterList = () => {
 		if (!filterLoading) {
-			return <div className="MultiSelectAdvanced_FilterList" ref={suggestionsRef}>
+			return <div className="Msa_FilterList" ref={suggestionsRef}>
 
 				{
 					!filterLoading && <ul ref={suggestionsListRef}>
 						
 						{
 							filteredList.map((filteredItem, i) => 
-								<li className={`MultiSelectAdvanced_FilterList_Item${(filteredItem?.disabled === 'false') !== Boolean(filteredItem?.disabled) ? ' MultiSelectAdvanced_FilterList_Item--disabled':''}`} tabIndex={0} onKeyDown={handleNavigate} onClick={() => addSelection(filteredItem)} key={i.toString() + filteredItem.value}>
+								<li role="button" className={`Msa_FilterList_Item${(filteredItem?.disabled === 'false') !== Boolean(filteredItem?.disabled) ? ' Msa_FilterList_Item--disabled':''}`} tabIndex={0} onKeyDown={handleNavigate} onClick={() => addSelection(filteredItem)} key={i.toString() + filteredItem.value}>
 									{ filterHighlightKeyword ? highlightText(filteredItem.label) : filteredItem.label }
 								</li>
 							)
@@ -493,11 +497,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	// Render component
 	return <div className={classNames}>
 
-		<div className="MultiSelectAdvanced_Selection" ref={selectionRef}>
+		<div className="Msa_Selection" ref={selectionRef}>
 
-			{ label && <label className="MultiSelectAdvanced_Label" htmlFor={name}>{label}</label> }
+			{ label && <label className="Msa_Label" htmlFor={name}>{label}</label> }
 
-			<div className={`MultiSelectAdvanced_FilterInput${invalid?' MultiSelectAdvanced_FilterInput--invalid':''}`} ref={inputContainerRef}>
+			<div className={`Msa_FilterInput${invalid?' Msa_FilterInput--invalid':''}`} ref={inputContainerRef}>
 
 				<input name={name} id={id} type="text" onChange={handleFilter} onKeyDown={handleInputKeyDown} value={filterKeyword} placeholder={placeholderText} ref={inputRef} disabled={isInputDisabled || disabled} />
 

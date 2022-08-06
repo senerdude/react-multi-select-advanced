@@ -42,7 +42,7 @@ function App() {
 
 				<h1>React Multi Select Advanced</h1>
 
-				<MultiSelectAdvanced label="Select cities from 42802 cities all around the world" options={options.cities} selectedValues={selectedItems} onChange={handleChange} />
+				<MultiSelectAdvanced label="Select cities from all around the world" placeholder="Type a city name" selectionShowDeleteButton={true} selectionMaxVisibleItems={10} selectionShowClear={true} options={options.cities} selectedValues={selectedItems} onChange={handleChange} />
 
 			</div>
 		</div>

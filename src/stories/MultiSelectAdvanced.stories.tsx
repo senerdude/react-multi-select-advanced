@@ -33,12 +33,7 @@ export default {
 	parameters: {
 		docs: {
 		  description: {
-			  component: `
-	Warning: In this demo I used nearly 43,000 city names around the world as options.
-	To prevent Storybook from overload and crash, I had to disable the 
-	options parameter on Storybook. Also, clicking "Show code" under the component, 
-	could cause to freeze your browser too. 🥶
-			  `
+			  component: 'Warning: In this demo I used 42.802 city names around the world as options. To prevent Storybook from overload and crash, I had to disable the options parameter on Storybook. Also, clicking "Show code" under the component, might freeze your browser too. 🥶'
 		  }
 		}
 	},
@@ -51,7 +46,7 @@ export default {
 	}
 } as ComponentMeta<typeof MultiSelectAdvanced>
 
-const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <div style={{ fontFamily:'Verdana' }}><MultiSelectAdvanced {...args} /></div>
+const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <div style={{ fontFamily: 'Roboto, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif' }}><MultiSelectAdvanced {...args} /></div>
 
 export const BasicUsage = Template.bind({})
 BasicUsage.args = {
