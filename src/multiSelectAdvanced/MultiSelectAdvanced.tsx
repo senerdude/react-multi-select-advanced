@@ -30,6 +30,7 @@ export interface MultiSelectAdvancedProps {
 	filterOrderByMatchRank?: boolean
 	// Selected Items
 	selectionLimit?: number
+	hideInputOnSelectionLimit?: boolean
 	selectionMaxVisibleItems?: number
 	selectionLabelMaxWidth?: number
 	selectionShowClear?: boolean
@@ -75,7 +76,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		// Selected Items
 		selectionLimit,
 		selectionMaxVisibleItems,
-		selectionLabelMaxWidth= 100,
+		hideInputOnSelectionLimit = false,
+		selectionLabelMaxWidth = 100,
 		selectionShowClear = false,
 		selectionShowDeleteButton = true,
 		// Language
@@ -157,10 +159,18 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	useEffect(() => {
 		if (selectionLimit && selectionLimit <= selectedItems.length) {
 			setIsInputDisabled(true)
-			setPlaceholderText(languageDefaults.selectionLimitReached)
+			if (hideInputOnSelectionLimit) {
+				inputContainerRef.current.style.display = 'none'
+			} else {
+				setPlaceholderText(languageDefaults.selectionLimitReached)
+			}
 		} else {
 			setIsInputDisabled(false)
-			setPlaceholderText(placeholder)
+			if (hideInputOnSelectionLimit) {
+				inputContainerRef.current.removeAttribute('style')
+			} else {
+				setPlaceholderText(placeholder)
+			}
 		}
 	}, [selectionLimit, selectedItems])
 

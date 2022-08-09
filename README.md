@@ -130,6 +130,7 @@ export default App
 | `filterOrderByMatchRank` | `boolean` | `false` | Gives match score if label starts with search keyword. Suggested to use with filterLimit because of performance.
 | **Selected Items**
 | `selectionLimit` | `number` |  | Limits selected items.
+| `hideInputOnSelectionLimit` | `boolean` |  | Hides input when selection limit reached
 | `selectionMaxVisibleItems` | `number` |  | Limits selected display items and adds 'x more..' or MoreItemsComponent after items.
 | `selectionLabelMaxWidth` | `number` | `100` | Limits max width (px) of display label and wrap with ellipsis.
 | `selectionShowClear` | `boolean` | `false` | Shows clear all button after selected items if selected count more than 2.
