@@ -201,6 +201,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	// Remove selected option
 	const removeSelection = ( item : MultiSelectAdvancedOption ) => {
 
+		if (disabled) return false
+
 		// Remove item
 		setSelectedItems(selectedItems.filter(option => JSON.stringify(option) !== JSON.stringify(item)))
 
@@ -214,6 +216,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 	// Clear selected options, input and filter results
 	const clearSelection = () => {
+
+		if (disabled) return false
 
 		// Clean selections
 		setSelectedItems([])
@@ -434,6 +438,9 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 	// Clear Button
 	const ClearButton = () => {
+
+		if (disabled) return null
+
 		// IF button enabled and min 2 items selected
 		if (selectionShowClear && selectedItems.length > 1) {
 			return <li role="button" className="Msa_SelectionList_ClearAllButtonContainer" tabIndex={0} onKeyDown={e => clearSelectionKey(e)} onClick={clearSelection} title={languageDefaults.selectionShowClearTitle}>
@@ -459,8 +466,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 				if (selectionMaxVisibleItems && selectionMaxVisibleItems <= i) break
 				
-				selectedItemsList.push(<li className={`Msa_SelectionList_Item${selectionShowDeleteButton?' Msa_SelectionList_Item--showDelete':''}`} key={selectedItem.value} tabIndex={0} onKeyDown={e => removeSelectionKey(e, selectedItem)}>
-					<span style={{ maxWidth: selectionLabelMaxWidth }}>{selectedItem.label}</span> <DeleteButton item={selectedItem} />
+				selectedItemsList.push(<li className={`Msa_SelectionList_Item${selectionShowDeleteButton && !disabled?' Msa_SelectionList_Item--showDelete':''}`} key={selectedItem.value} tabIndex={0} onKeyDown={e => removeSelectionKey(e, selectedItem)}>
+					<span style={{ maxWidth: selectionLabelMaxWidth }}>{selectedItem.label}</span> { !disabled && <DeleteButton item={selectedItem} /> }
 				</li>)
 
 			}

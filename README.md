@@ -119,7 +119,7 @@ export default App
 | `name` | `string` | auto | input name.
 | `id` | `string` | auto | input id.
 | `label` | `string` |  | Add label to top of input.
-| `disabled` | `boolean` |  | Disables search input.
+| `disabled` | `boolean` |  | Disables input and all actions.
 | `invalid` | `boolean` |  | If true border color turns to red.
 | `inputDelay` | `number` | `1000` | Input delay (ms).
 | `placeholder` | `string` |  | Input placeholder.
@@ -130,7 +130,7 @@ export default App
 | `filterOrderByMatchRank` | `boolean` | `false` | Gives match score if label starts with search keyword. Suggested to use with filterLimit because of performance.
 | **Selected Items**
 | `selectionLimit` | `number` |  | Limits selected items.
-| `hideInputOnSelectionLimit` | `boolean` |  | Hides input when selection limit reached
+| `hideInputOnSelectionLimit` | `boolean` | `false` | Hides input when selection limit reached
 | `selectionMaxVisibleItems` | `number` |  | Limits selected display items and adds 'x more..' or MoreItemsComponent after items.
 | `selectionLabelMaxWidth` | `number` | `100` | Limits max width (px) of display label and wrap with ellipsis.
 | `selectionShowClear` | `boolean` | `false` | Shows clear all button after selected items if selected count more than 2.
