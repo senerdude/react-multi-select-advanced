@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
@@ -271,23 +270,26 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 		// Prevent default browser behaviour
 		e.preventDefault()
+
+		const target = e.target as HTMLElement
+		// const targetButton = e.target as HTMLElement
 		
 		if (e.key === 'ArrowDown' && filteredList.length > 0) {
-			if (e.target?.nextSibling !== null) {
-				const nextSibling = e.target?.nextElementSibling as HTMLLIElement	
+			if (target?.nextSibling !== null) {
+				const nextSibling = target?.nextElementSibling as HTMLLIElement	
 				nextSibling && nextSibling?.focus()
 			}
 		}
 
 		if (e.key === 'ArrowUp' && filteredList.length > 0) {
-			if (e.target?.previousSibling !== null) {
-				const prevSibling = e.target?.previousElementSibling as HTMLLIElement
+			if (target?.previousSibling !== null) {
+				const prevSibling = target?.previousElementSibling as HTMLLIElement
 				prevSibling && prevSibling?.focus()
 			}
 		}
 
 		if (e.key === 'Enter' && filteredList.length > 0) {
-			e.target.click()
+			target.click()
 		}
 	}
 

@@ -5,7 +5,7 @@
 ## Description
 
 The React Multi-select Advanced component is a powerful tool that can handle massive data sets without any struggle.
-It comes with various customizable features that make it very easy to use, so you can tailor it to your specific needs.
+It comes with various customizable features that make it very easy to use, so you can tailor it to your specific needs. Now it supports server side search.
 
 Like Beyoncé said, If you liked it, then you should a put a ⭐ on it. ➽ [![Stars](https://img.shields.io/github/stars/senerdude/react-multi-select-advanced?style=social)](https://github.com/senerdude/react-multi-select-advanced)
 
@@ -86,7 +86,7 @@ function App() {
  const [selectedItems, setSelectedItems] = useState(selectedValues as MultiSelectAdvancedOption[])
 
  // Onchange handler
- const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => setSelectedItems(selectedItems)
+ const handleChange = (items: MultiSelectAdvancedOption[]) => setSelectedItems(items)
 
  return (
   <div className="App">
@@ -120,7 +120,19 @@ import MultiSelectAdvanced, { MultiSelectAdvancedOption } from 'react-multi-sele
 const options = [
  { label: 'Istanbul', value: 'Istanbul' },
  { label: 'Paris', value: 'Paris' },
- { label: 'London', value: 'London' }
+ { label: 'London', value: 'London' },
+ { label: 'Buenos Aires', value: 'Buenos Aires' },
+ { label: 'Canberra', value: 'Canberra' },
+ { label: 'Havana', value: 'Havana' },
+ { label: 'Helsinki', value: 'Helsinki', disabled: true },
+ { label: 'Tokyo', value: 'Tokyo' },
+ { label: 'Amsterdam', value: 'Amsterdam' },
+ { label: 'Moscow', value: 'Moscow' },
+ { label: 'Stockholm', value: 'Stockholm', disabled: true },
+ { label: 'Singapore', value: 'Singapore' },
+ { label: 'Lisbon', value: 'Lisbon' },
+ { label: 'Oslo', value: 'Oslo' },
+ { label: 'Reykjavík', value: 'Reykjavík' }
 ]
 
 // App
@@ -130,7 +142,7 @@ function App() {
  const [selectedItems, setSelectedItems] = useState([] as MultiSelectAdvancedOption[])
 
  // Onchange handler
- const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => setSelectedItems(selectedItems)
+ const handleChange = (items: MultiSelectAdvancedOption[]) => setSelectedItems(items)
 
 // Server side search function
 const searchOnServer = async (keyword:string) => {
@@ -167,7 +179,7 @@ export default App
 
 ----
 
-## 3. Props
+## 4. Props
 
 <table style="font-size: 14px">
 
@@ -204,15 +216,17 @@ export default App
 | `ClearButtonComponent` | `JSX.Element` | | Custom clear all button.
 | `DeleteButtonComponent` | `JSX.Element` | | Custom delete button.
 | `MoreItemsComponent` | `JSX.Element` | | Custom more items.
+| **Callback Type**
+| `isServerSide` | `boolean` | `false` | Enables server side search.
 | **Callback**
 | `onChange` | `function` |  | Callback function will invoked on selected options are changed.
-
+| `onKeywordChange` | `function` |  | Callback function to pass keyword and accept data on return.
 
 </table>
 
 ----
 
-## 4. Localization
+## 5. Localization
 
 Easy to localize component by passing object to prop `languageOverwrite`. Default values are as below.
 
@@ -227,7 +241,7 @@ Easy to localize component by passing object to prop `languageOverwrite`. Defaul
 
 ----
 
-## 5. License
+## 6. License
 
 MIT Licensed. Copyright © Lifetoweb 2022.
 

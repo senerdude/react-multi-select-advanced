@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable import/named */
 import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
@@ -46,10 +45,44 @@ export default {
 	}
 } as ComponentMeta<typeof MultiSelectAdvanced>
 
-const Template: ComponentStory<typeof MultiSelectAdvanced> = args => <div style={{ fontFamily: 'Roboto, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif' }}><MultiSelectAdvanced {...args} /></div>
+// Local state
+const LocalDataFilterTemplate: ComponentStory<typeof MultiSelectAdvanced> = args => 
+	<div style={{ fontFamily: 'Roboto, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif' }}>
+		<MultiSelectAdvanced {...args} />
+	</div>
 
-export const BasicUsage = Template.bind({})
-BasicUsage.args = {
+export const LocalDataFilter = LocalDataFilterTemplate.bind({})
+LocalDataFilter.args = {
 	options: options.cities,
 	selectedValues : selectedCities
+}
+
+// Server side search
+const ServerSideSearchTemplate: ComponentStory<typeof MultiSelectAdvanced> = args => 
+	<div style={{ fontFamily: 'Roboto, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, sans-serif' }}>
+		<MultiSelectAdvanced {...args} />
+	</div>
+
+export const ServerSideSearch = ServerSideSearchTemplate.bind({})
+ServerSideSearch.args = {
+	placeholder: 'Type a city name',
+	isServerSide : true,
+	onKeywordChange: (keyword:string) => searchOnServer(keyword)
+}
+
+// Search function
+const searchOnServer = async (keyword:string) => {
+	try {
+		return await search(keyword)
+	} catch (error){
+		return error
+	}
+}
+
+// Mock server response
+const search = async (keyword:string) => {
+	return new Promise(resolve => {
+		const filteredData = options.cities.filter(city => city.label.toLowerCase().includes(keyword.toLowerCase()))
+		return setTimeout(() => resolve(filteredData), 500)
+	})
 }
