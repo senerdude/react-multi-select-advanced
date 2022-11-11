@@ -1,6 +1,6 @@
 # react-multi-select-advanced
 
-[![Open Source](https://badgen.net/badge/open-source/❤%EF%B8%8F/green?icon=github)](https://github.com/senerdude/react-multi-select-advanced) [![Top Language](https://img.shields.io/github/languages/top/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced) [![MIT License](https://img.shields.io/github/license/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced) [![Issues](https://img.shields.io/github/issues-raw/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced/issues) [![Minified Size](https://img.shields.io/bundlephobia/min/react-multi-select-advanced)](https://www.npmjs.com/package/react-multi-select-advanced) [![Downloads](https://img.shields.io/npm/dt/react-multi-select-advanced)](https://www.npmjs.com/package/react-multi-select-advanced) [![Storybook](https://img.shields.io/badge/Storybok-Playground-ff69b4)](https://lifetoweb.com/react-multi-select-advanced/)
+[![Open Source](https://badgen.net/badge/open-source/❤%EF%B8%8F/green?icon=github)](https://github.com/senerdude/react-multi-select-advanced) [![Top Language](https://img.shields.io/github/languages/top/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced) [![MIT License](https://img.shields.io/github/license/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced) [![Issues](https://img.shields.io/github/issues-raw/senerdude/react-multi-select-advanced)](https://github.com/senerdude/react-multi-select-advanced/issues) [![Minified Size](https://img.shields.io/bundlephobia/min/react-multi-select-advanced)](https://www.npmjs.com/package/react-multi-select-advanced) [![Downloads](https://img.shields.io/npm/dt/react-multi-select-advanced)](https://www.npmjs.com/package/react-multi-select-advanced) [![Storybook](https://img.shields.io/badge/Storybok-Playground-ff69b4)](https://lifetoweb.com/react-multi-select-advanced/index.html)
 
 ## Description
 
@@ -23,7 +23,8 @@ Like Beyoncé once said, If you liked it, then you should a put a ⭐ on it. ➽
 - **Keyboard navigation**: Supports keyboard arrows and tab.
 - **Highlight keywords**: Highlights entered text on list results.
 - **Match priority**: If label starts with keyword, shows first.
-- **[Storybook](https://lifetoweb.com/react-multi-select-advanced/)** : Document and test playground.
+- **Server side search**: Supports server side search.
+- **[Storybook](https://lifetoweb.com/react-multi-select-advanced/index.html)** : Document and test playground.
 
 </div>
 

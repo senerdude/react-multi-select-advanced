@@ -1,5 +1,5 @@
 {
-  "version": "1.2.1",
+  "version": "1.2.2",
   "name": "react-multi-select-advanced",
   "description": "React multi select filter input with advanced features",
   "author": "Sener <sener@lifetoweb.com> (http://lifetoweb.com)",
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/senerdude/react-multi-select-advanced/issues"
   },
-  "homepage": "https://lifetoweb.com/react-multi-select-advanced",
+  "homepage": "https://lifetoweb.com/react-multi-select-advanced/index.html",
   "license": "MIT",
   "engines": {
     "node": ">=8",
