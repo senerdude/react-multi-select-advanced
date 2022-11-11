@@ -105,6 +105,68 @@ export default App
 
 ----
 
+## 3. Server side search
+
+<table style="font-size: 14px">
+
+```js
+
+import { useState } from 'react'
+
+// Import component / and types if need it.
+import MultiSelectAdvanced, { MultiSelectAdvancedOption } from 'react-multi-select-advanced'
+
+// Mock data
+const options = [
+ { label: 'Istanbul', value: 'Istanbul' },
+ { label: 'Paris', value: 'Paris' },
+ { label: 'London', value: 'London' }
+]
+
+// App
+function App() {
+
+ // Pre-select or not
+ const [selectedItems, setSelectedItems] = useState([] as MultiSelectAdvancedOption[])
+
+ // Onchange handler
+ const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => setSelectedItems(selectedItems)
+
+// Server side search function
+const searchOnServer = async (keyword:string) => {
+	try {
+		// Before return the data make sure structure is matching with array of MultiSelectAdvancedOption
+		return await search(keyword)
+	} catch (error){
+		return error
+	}
+}
+
+// Mock server response
+const search = async (keyword:string) => {
+	return new Promise(resolve => {
+		const filteredData = options.cities.filter(city => city.label.toLowerCase().includes(keyword.toLowerCase()))
+		return setTimeout(() => resolve(filteredData), 500)
+	})
+}
+
+ return (
+  <div className="App">
+
+   <MultiSelectAdvanced isServerSide={true} selectedValues={selectedItems} onChange={handleChange} onKeywordChange={keyword => searchOnServer(keyword)} />
+
+  </div>
+ )
+}
+
+export default App
+
+```
+
+</table>
+
+----
+
 ## 3. Props
 
 <table style="font-size: 14px">

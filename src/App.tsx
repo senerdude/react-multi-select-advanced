@@ -22,18 +22,38 @@ const selectedCities = [
 	{ label: 'Lisbon', value: 'Lisbon' },
 	{ label: 'Oslo', value: 'Oslo' },
 	{ label: 'Reykjavík', value: 'Reykjavík' }
-]
+] as MultiSelectAdvancedOption[]
 
 function App() {
-	// Pre-select or not
-	const [selectedItems, setSelectedItems] = useState(
-		selectedCities as MultiSelectAdvancedOption[]
-	)
+	
+	const [localSelectedItems, setLocalSelectedItems] = useState(selectedCities) // Local filter selection state
+	const [serverSelectedItems, setServerSelectedItems] = useState([] as MultiSelectAdvancedOption[]) // Server search selection state
 
-	const handleChange = (selectedItems: MultiSelectAdvancedOption[]) => {
-		setSelectedItems(selectedItems)
-		// eslint-disable-next-line no-console
-		console.log(selectedItems)
+	// Set locally selected values
+	const handleLocalFilterChange = (selectedItems: MultiSelectAdvancedOption[]) => {
+		setLocalSelectedItems(selectedItems)
+	}
+
+	// Set selected values by search result
+	const handleSearchOnServerChange = (selectedItems: MultiSelectAdvancedOption[]) => {
+		setServerSelectedItems(selectedItems)
+	}
+
+	// Search function
+	const searchOnServer = async (keyword:string) => {
+		try {
+			return await search(keyword)
+		} catch (error){
+			return error
+		}
+	}
+
+	// Mock server response
+	const search = async (keyword:string) => {
+		return new Promise(resolve => {
+			const filteredData = options.cities.filter(city => city.label.toLowerCase().includes(keyword.toLowerCase()))
+			return setTimeout(() => resolve(filteredData), 500)
+		})
 	}
 
 	return (
@@ -42,7 +62,31 @@ function App() {
 
 				<h1>React Multi Select Advanced</h1>
 
-				<MultiSelectAdvanced label="Select cities from all around the world" placeholder="Type a city name" selectionShowDeleteButton={true} selectionMaxVisibleItems={10} selectionShowClear={true} options={options.cities} selectedValues={selectedItems} onChange={handleChange} />
+				<h2>Using local state</h2>
+				<MultiSelectAdvanced 
+					name="localFilter"
+					label="Select cities from all around the world" 
+					placeholder="Type a city name" 
+					selectionShowDeleteButton={true} 
+					selectionMaxVisibleItems={10} 
+					selectionShowClear={true} 
+					options={options.cities} 
+					selectedValues={localSelectedItems} 
+					onChange={handleLocalFilterChange} 
+				/>
+
+				<h2>Search on server</h2>
+				<MultiSelectAdvanced 
+					name="searchOnServer"
+					label="Search cities from all around the world" 
+					placeholder="Type a city name" 
+					selectionShowDeleteButton={true}
+					selectionShowClear={true} 
+					selectedValues={serverSelectedItems} 
+					onChange={handleSearchOnServerChange}
+					isServerSide={true}
+					onKeywordChange={keyword => searchOnServer(keyword)}
+				/>
 
 			</div>
 		</div>

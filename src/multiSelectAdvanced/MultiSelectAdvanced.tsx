@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
 import './MultiSelectAdvanced.scss'
 
@@ -41,12 +42,15 @@ export interface MultiSelectAdvancedProps {
 	LoadingComponent?: React.ElementType 
 	DeleteButtonComponent?: React.ElementType 
 	ClearButtonComponent?: React.ElementType 
-	MoreItemsComponent?: React.ElementType 
+	MoreItemsComponent?: React.ElementType
+	// Callback Type
+	isServerSide?: boolean
 	// Callback
 	onChange?: (value: MultiSelectAdvancedOption[]) => void
+	onKeywordChange?: (keyword: string) => Promise<MultiSelectAdvancedOption[]>
 }
 
-let handleFilterTimeout: NodeJS.Timeout
+let handleInputDelayTimeout: NodeJS.Timeout
 const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 	// Generates unique id in case name or id not provided.
@@ -76,10 +80,10 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		// Selected Items
 		selectionLimit,
 		selectionMaxVisibleItems,
-		hideInputOnSelectionLimit = false,
-		selectionLabelMaxWidth = 100,
-		selectionShowClear = false,
-		selectionShowDeleteButton = true,
+		hideInputOnSelectionLimit= false,
+		selectionLabelMaxWidth= 100,
+		selectionShowClear= false,
+		selectionShowDeleteButton= true,
 		// Language
 		languageOverwrite,
 		// Custom components
@@ -87,8 +91,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		ClearButtonComponent,
 		DeleteButtonComponent,
 		MoreItemsComponent,
+		// Callback Type
+		isServerSide= false,
 		// Callback
-		onChange
+		onChange,
+		onKeywordChange
 	} = props
 
 	// Local State
@@ -292,11 +299,11 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		return parts.filter(String).map((part, i) => <React.Fragment key={i}>{ regex.test(part)?<mark>{part}</mark>:part}</React.Fragment>)
 	}
 
-	// Search
-	const handleFilter = (e: { target: HTMLInputElement }) => {
+	// Handle keyword change
+	const handleChange = (e: { target: HTMLInputElement }) => {
 
 		// Clear timeout
-		clearTimeout(handleFilterTimeout) 
+		clearTimeout(handleInputDelayTimeout)
 
 		// Keyword 
 		const keyword = e?.target?.value || ''
@@ -315,90 +322,124 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 			return null
 		}
 
-		// If there is no options provided
-		if (!options?.length) return
-
 		// Show loading state
 		setFilterLoading(true)
 
-		// Debounce
-		handleFilterTimeout = setTimeout(() => {
+		// Debounce keystrokes
+		handleInputDelayTimeout = setTimeout(async () => {
 
-			// Filter results by provided keywords
-			const tmpList = []
-			for (let i = 0; i < options.length; i++) {
+			// If it's server side and onKeywordChange defined
+			if (isServerSide && onKeywordChange) {
 
-				// Item
-				const option = options[i] as MultiSelectAdvancedOption
+				const serverResponse = await onKeywordChange(keyword)
 
-				// Break early if reach the result limit. 
-				// If filterOrderByMatchRank true, filter limit will applied the end of search.
-				// Therefore filterOrderByMatchRank would be slower depending on total records.
-				if (!filterOrderByMatchRank && filterLimit && tmpList.length >= filterLimit) {
+				if (Array.isArray(serverResponse) && serverResponse?.length) {
 
-					// Push the results
-					setFilteredList(keyword.length > 0 ? tmpList : [] as MultiSelectAdvancedOption[])
-					
-					// Set Loading false
-					setFilterLoading(false)
-
-					break
-				}
-
-				// Skip loop if item in selected items
-				let isItemExist = false
-				for (let s = 0; s < selectedItems.length; s++) {
-					if (JSON.stringify(option.value) === JSON.stringify(selectedItems[s].value)) {
-						isItemExist = true
-						break
-					}
-				}
-				if (isItemExist) continue
-
-				// Match keyword and rank them
-				if (filterOrderByMatchRank) {
-
-					const startsWithRegex = new RegExp(`^${keyword}`, 'i') // Value starts with keyword
-					const isStartsWith = option.label.match(startsWithRegex)
-					if (isStartsWith) {
-						option.matchRank = 1 
-						tmpList.push(option)
-					} else {
-						const includeRegex = new RegExp(`${keyword}`, 'i') // Value includes keyword
-						const isIncluded = option.label.match(includeRegex)
-						if (isIncluded) {
-							option.matchRank = 2
-							tmpList.push(option)
-						}
-					}
+					handleFilter(serverResponse, keyword)
 
 				} else {
-
-					if (option.label.toLowerCase().includes(keyword.toLowerCase())) tmpList.push(option)
-
-				}
-
-				// Finally, set data if limit reached or all records checked
-				if (options.length - 1 === i) {
-
-					// Sort result by rank if enabled
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-					if (filterOrderByMatchRank) tmpList.sort((a,b) => a.matchRank! - b.matchRank!)
-
-					// Limit the output if filter limit defined
-					if (filterLimit && tmpList.length >= filterLimit) tmpList.length = filterLimit
-
-					// Push the results
-					setFilteredList(keyword.length > 0 ? tmpList : [] as MultiSelectAdvancedOption[])
-
 					// Set Loading false
 					setFilterLoading(false)
-
-					break
+					console.warn('No results found.')
 				}
+			
+			// If options provided by props
+			} else if (options && options?.length > 0) {
+				handleFilter(options, keyword)
+			} else {
+				// Set Loading false
+				setFilterLoading(false)
+				console.warn('No results found.')
 			}
 
 		}, inputDelay)
+
+	}
+
+	// Filter
+	const handleFilter = (optionsList: MultiSelectAdvancedOption[], keyword:string) => {
+
+		// Filter results by provided keywords
+		const tmpList = []
+		for (let i = 0; i < optionsList.length; i++) {
+
+			// Item
+			const option = optionsList[i] as MultiSelectAdvancedOption
+
+			// Check data is properly structured
+			if (!option?.value || !option.label) {
+				
+				console.warn('Data should have label and value attributes')
+
+				break
+			}
+
+			// Break early if reach the result limit. 
+			// If filterOrderByMatchRank true, filter limit will applied the end of search.
+			// Therefore filterOrderByMatchRank would be slower depending on total records.
+			if (!filterOrderByMatchRank && filterLimit && tmpList.length >= filterLimit) {
+
+				// Push the results
+				setFilteredList(keyword.length > 0 ? tmpList : [] as MultiSelectAdvancedOption[])
+				
+				// Set Loading false
+				setFilterLoading(false)
+
+				break
+			}
+
+			// Skip loop if item in selected items
+			let isItemExist = false
+			for (let s = 0; s < selectedItems.length; s++) {
+				if (JSON.stringify(option.value) === JSON.stringify(selectedItems[s].value)) {
+					isItemExist = true
+					break
+				}
+			}
+			if (isItemExist) continue
+
+			// Match keyword and rank them
+			if (filterOrderByMatchRank) {
+
+				const startsWithRegex = new RegExp(`^${keyword}`, 'i') // Value starts with keyword
+				const isStartsWith = option.label.match(startsWithRegex)
+				if (isStartsWith) {
+					option.matchRank = 1 
+					tmpList.push(option)
+				} else {
+					const includeRegex = new RegExp(`${keyword}`, 'i') // Value includes keyword
+					const isIncluded = option.label.match(includeRegex)
+					if (isIncluded) {
+						option.matchRank = 2
+						tmpList.push(option)
+					}
+				}
+
+			} else {
+
+				if (option?.label?.toLowerCase().includes(keyword.toLowerCase())) tmpList.push(option)
+
+			}
+
+			// Finally, set data if limit reached or all records checked
+			if (optionsList.length - 1 === i) {
+
+				// Sort result by rank if enabled
+				// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+				if (filterOrderByMatchRank) tmpList.sort((a,b) => a.matchRank! - b.matchRank!)
+
+				// Limit the output if filter limit defined
+				if (filterLimit && tmpList.length >= filterLimit) tmpList.length = filterLimit
+
+				// Push the results
+				setFilteredList(keyword.length > 0 ? tmpList : [] as MultiSelectAdvancedOption[])
+
+				// Set Loading false
+				setFilterLoading(false)
+
+				break
+			}
+		}
 	}
 
 	// Loading Indicator
@@ -519,7 +560,7 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 
 			<div className={`Msa_FilterInput${invalid?' Msa_FilterInput--invalid':''}`} ref={inputContainerRef}>
 
-				<input name={name} id={id} type="text" onChange={handleFilter} onKeyDown={handleInputKeyDown} value={filterKeyword} placeholder={placeholderText} ref={inputRef} disabled={isInputDisabled || disabled} />
+				<input name={name} id={id} type="text" onChange={handleChange} onKeyDown={handleInputKeyDown} value={filterKeyword} placeholder={placeholderText} ref={inputRef} disabled={isInputDisabled || disabled} />
 
 				<LoadingIndicator />
 
