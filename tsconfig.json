@@ -22,6 +22,6 @@
 		"allowSyntheticDefaultImports": true,
 		"resolveJsonModule": true
 	},
-	"include": ["src"],
+	"include": ["src/", "placeholder.ts"],
 	"exclude": ["node_modules", "dist", "public", "rollup.config.js"]
 }
