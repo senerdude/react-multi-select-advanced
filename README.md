@@ -7,7 +7,7 @@
 The React Multi-select Advanced component is a powerful tool that can handle massive data sets without any struggle.
 It comes with various customizable features that make it very easy to use, so you can tailor it to your specific needs. Now it supports server side search.
 
-Like Beyoncé said, If you liked it, then you should a put a ⭐ on it. ➽ [![Stars](https://img.shields.io/github/stars/senerdude/react-multi-select-advanced?style=social)](https://github.com/senerdude/react-multi-select-advanced)
+Like Beyoncé once said, If you liked it, then you should a put a ⭐ on it. ➽ [![Stars](https://img.shields.io/github/stars/senerdude/react-multi-select-advanced?style=social)](https://github.com/senerdude/react-multi-select-advanced)
 
 ## Features
 
