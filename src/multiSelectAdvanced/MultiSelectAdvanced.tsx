@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect } from 'react'
+import React, { MutableRefObject, useLayoutEffect, useRef, useState, KeyboardEvent, useEffect, forwardRef, useImperativeHandle } from 'react'
 import './MultiSelectAdvanced.scss'
 
 // Options interface
@@ -50,7 +50,7 @@ export interface MultiSelectAdvancedProps {
 }
 
 let handleInputDelayTimeout: NodeJS.Timeout
-const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
+const MultiSelectAdvanced = forwardRef<HTMLInputElement, MultiSelectAdvancedProps>((props, ref) => {
 
 	// Generates unique id in case name or id not provided.
 	const uniqueId = () => {
@@ -113,6 +113,8 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 	const suggestionsListRef = useRef() as MutableRefObject<HTMLUListElement>
 	const inputContainerRef = useRef() as MutableRefObject<HTMLDivElement>
 	const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+
+	useImperativeHandle(ref, () => inputRef.current)
 
 	// Classes
 	const classNames = 'Msa' +
@@ -575,6 +577,7 @@ const MultiSelectAdvanced = (props: MultiSelectAdvancedProps) => {
 		<SelectionList />
 
 	</div>
-}
+})
 
+MultiSelectAdvanced.displayName = 'MultiSelectAdvanced'
 export default MultiSelectAdvanced
